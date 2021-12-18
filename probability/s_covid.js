@@ -40,7 +40,7 @@ scenarios["covid"] = {
   "    woo hoo!!!</li>",
   "    <li>If learning more about these statistics encourages a person in badness, then I",
   "    sincerely apologize and beg forgiveness.</li>",
-  "    <li>I also apologize if you do not share my unrefined sense of humor about the idea of a 'roulette wheel of doom'.</li>",
+  "    <li>I also apologize if you do not share my unrefined sense of humor about the 'roulette wheel of doom'.</li>",
   "</ul>"
   ],
 
