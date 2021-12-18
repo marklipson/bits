@@ -28,7 +28,7 @@ scenarios["covid"] = {
   "<h3>Technical Notes</h3>",
   "<ul>",
   "    <li>All data is gathered from public sources.  The notebook where the probabilities were derived,",
-  "        and links to those sources is <a href='covid_death_rate.ipynb'>here</a>.</li>",
+  "        and links to those sources is <a href='covid_death_rate.ipynb'>here</a> (population data <a href='us_pop_by_age.csv'>here</a>).</li>",
   "    <li>Any errors or misrepresentations on this page are my own unintentional mistakes.</li>",
   "    <li>The grid for 0-18 year olds is extremely dense because of the small probabilities involved, so it",
   "        doesn't look great and I suggest starting with something else.  If you look hard, though, you",
