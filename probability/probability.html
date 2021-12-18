@@ -268,7 +268,7 @@
         let descr = "";
         for (let n=0; n < scenario.overview.length; n++)
             descr += scenario.overview[n] + "\n";
-        document.getElementsByClassName("content")[0].innerHTML = descr;
+        document.getElementsByClassName("content")[0].innerHTML += descr;
         // - buttons
         let div_panel = document.getElementsByClassName("panel")[0];
         for (let n=0; n < scenario.options.length; n++) {
