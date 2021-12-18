@@ -28,6 +28,9 @@
             right: 0;
             margin: 6px;
         }
+        .panel button {
+            display: block;
+        }
         .controls {
             text-align: left;
             margin-left: 5%;
@@ -77,6 +80,15 @@
         }
     </style>
     <script>
+        const scenarios = {};
+    </script>
+    <script src="s_covid.js"></script>
+    <script src="s_test.js"></script>
+    <script>
+    // scenario can be selected in the URL
+    const which = window.location.hash.replace("#", "");
+    const scenario = scenarios[which || "covid"];
+
     function app() {
         let canvas = document.getElementById("canvas");
         canvas.width = window.innerWidth * 0.9;
@@ -251,6 +263,28 @@
         let c = [canvas.width/2, canvas.height/2];
         let target = null;
 
+        // unroll the selected scenario
+        // - overview
+        let descr = "";
+        for (let n=0; n < scenario.overview.length; n++)
+            descr += scenario.overview[n] + "\n";
+        document.getElementsByClassName("content")[0].innerHTML = descr;
+        // - buttons
+        let div_panel = document.getElementsByClassName("panel")[0];
+        for (let n=0; n < scenario.options.length; n++) {
+            let opt = scenario.options[n];
+            let btn = document.createElement("button");
+            btn.innerHTML = opt.button_label;
+            btn.addEventListener("click", function(evt) {
+                set_scenario(opt.title, opt.events);
+                // TODO show selection
+                // evt.target.className = "selected";
+            });
+            div_panel.appendChild(btn);
+            if (opt.default)
+                set_scenario(opt.title, opt.events);
+        }
+
         function set_scenario(heading, events) {
             target = new Target([c[0] - canvas.width/2, c[1] - canvas.height/2, canvas.width, canvas.height], events);
             let title = heading + ": probability of ";
@@ -262,39 +296,6 @@
             document.getElementById("title").innerHTML = title;
             target.draw();
         }
-
-        function set_year_scenario(range, p1, p2) {
-            let events = [
-                {names: ["dying of covid"], probs: [p2], colors: ["#b02020"]},
-                {names: ["dying of some other cause"], probs: [p1 - p2], colors: ["#ffa050"]}
-            ]
-            set_scenario("This year, for someone age " + range, events);
-        }
-
-        document.getElementById("s1").addEventListener("click", function(){
-            set_year_scenario("0-18", 1/2370, 1/159823);
-        });
-        document.getElementById("s2").addEventListener("click", function(){
-            set_year_scenario("18-30", 1/888, 1/16286);
-        });
-        document.getElementById("s3").addEventListener("click", function(){
-            set_year_scenario("30-40", 1/480, 1/4481);
-        });
-        document.getElementById("s4").addEventListener("click", function(){
-            set_year_scenario("40-50", 1/293, 1/1760);
-        });
-        document.getElementById("s5").addEventListener("click", function(){
-            set_year_scenario("50-65", 1/116, 1/695);
-        });
-        document.getElementById("s6").addEventListener("click", function(){
-            set_year_scenario("65-75", 1/48.7, 1/318);
-        });
-        document.getElementById("s7").addEventListener("click", function(){
-            set_year_scenario("75-85", 1/21.5, 1/161);
-        });
-        document.getElementById("s8").addEventListener("click", function(){
-            set_year_scenario("85+", 1/7.78, 1/76.2);
-        });
 
         let intro = document.getElementById("intro");
         intro.addEventListener("click", function(){
@@ -312,8 +313,6 @@
         document.getElementById("instructions").addEventListener("click", function(){
             intro.style.display = "block";
         });
-
-        set_year_scenario("40-50", 1/317, 1/1903);
 
         function choose_one() {
             let choice = target.random_square();
@@ -376,14 +375,6 @@
         </div>
     </div>
     <div class="panel">
-      <button id="s8">Age: 85+</button><br/>
-      <button id="s7">Age: 75-85</button><br/>
-      <button id="s6">Age: 65-75</button><br/>
-      <button id="s5">Age: 50-65</button><br/>
-      <button id="s4">Age: 40-50</button><br/>
-      <button id="s3">Age: 30-40</button><br/>
-      <button id="s2">Age: 18-30</button><br/>
-      <button id="s1">Age: 0-18</button><br/>
     </div>
     <div id="intro">
         <div class="screen"></div>
@@ -391,36 +382,6 @@
             <div class="big">
                 &lt;CLICK ANYWHERE TO BEGIN&gt;
             </div>
-            <h2>COVID PROBABILITY ILLUSTRATOR</h2>
-            Probabilities are hard to imagine.  This page attempts to illustrate them and let you interact a little
-            to get a feel for them.  This particular example is based on data from 2021 and shows the odds of people
-            in different age ranges dying from Covid versus other causes.
-            <h3>How to use it</h3>
-            <ul>
-                <li>Click on different age ranges on the right to see statistics for that sub-population.</li>
-                <li>The red dot(s) represent(s) death by Covid and the orange dots represent death by any other cause.</li>
-                <li>Death, in this case, technically means the probability of a person having died in the year 2021,
-                    but one can imagine it applying to 2022 as well and being a sort of roulette wheel of doom.</li>
-                <li>The 'try once' button spins the roulette wheel of doom, i.e. it picks a square at random.</li>
-                <li>The 'try harder' button keeps picking squares at random until it hits a colored square.</li>
-            </ul>
-            <h3>Technical Notes</h3>
-            <ul>
-                <li>All data is gathered from public sources.  The notebook where the probabilities were derived,
-                    and links to those sources is <a href="covid_death_rate.ipynb">here</a>.</li>
-                <li>Any errors or misrepresentations on this page are my own unintentional mistakes.</li>
-                <li>The grid for 0-18 year olds is extremely dense because of the small probabilities involved, so it
-                    doesn't look great and I suggest starting with something else.  If you look hard, though, you
-                    will see one very small dark red dot, and a scattering of orange dots.</li>
-            </ul>
-            <h3>Ethical Notes</h3>
-            <ul>
-                <li>If learning more about statistics makes public policy or a person's behavior better, then
-                woo hoo!!!</li>
-                <li>If learning more about statistics makes public policy or a person's behavior worse, then I
-                sincerely apologize and beg forgiveness.</li>
-                <li>I also apologize if you do not share my unrefined sense of humor about the idea of a 'roulette wheel of doom'.</li>
-            </ul>
         </div>
     </div>
   </body>
