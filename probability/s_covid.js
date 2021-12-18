@@ -2,7 +2,7 @@ function _mk_scenario(range, p1, p2, dflt=0) {
     return {
       "button_label": "Age " + range,
       "default": dflt,
-      "title": "In 2021, for someone age " + range + ", the odds of...",
+      "title": "In 2021, for someone age " + range,
       "events": [
         {"names": ["dying of covid"], "probs": [1/p2], "colors": ["#b02020"]},
         {"names": ["dying of some other cause"], "probs": [1/p1 - 1/p2], "colors": ["#ffa050"]}
@@ -36,9 +36,9 @@ scenarios["covid"] = {
   "</ul>",
   "<h3>Ethical Notes</h3>",
   "<ul>",
-  "    <li>If learning more about statistics makes public policy or a person's behavior better, then",
+  "    <li>If learning more about these statistics helps a person to strive toward goodness, then",
   "    woo hoo!!!</li>",
-  "    <li>If learning more about statistics makes public policy or a person's behavior worse, then I",
+  "    <li>If learning more about these statistics encourages a person in badness, then I",
   "    sincerely apologize and beg forgiveness.</li>",
   "    <li>I also apologize if you do not share my unrefined sense of humor about the idea of a 'roulette wheel of doom'.</li>",
   "</ul>"
