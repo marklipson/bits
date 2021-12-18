@@ -29,6 +29,8 @@
             margin: 6px;
         }
         .controls {
+            text-align: left;
+            margin-left: 5%;
             margin-top: 8px;
         }
         .controls button {
@@ -38,8 +40,10 @@
             font-weight: bold;
         }
         #explain {
-            vertical-align: middle;
+            margin-top: 8px;
             margin-left: 12px;
+            margin-right: 5%;
+            float: right;
         }
         #intro {
             cursor: pointer;
@@ -362,22 +366,23 @@
     <div class="wrap">
         <h1 id="title">Probabilities</h1>
         <canvas id="canvas"></canvas>
+        <div id="explain">
+        </div>
         <div class="controls">
             <button id="try_1">Try once</button>
             <button id="try_n">Try harder</button>
             <button id="instructions">Show instructions again</button>
-            <span id="explain"></span>
         </div>
     </div>
     <div class="panel">
-      <button id="s1">Age: 0-18</button><br/>
-      <button id="s2">Age: 18-30</button><br/>
-      <button id="s3">Age: 30-40</button><br/>
-      <button id="s4">Age: 40-50</button><br/>
-      <button id="s5">Age: 50-65</button><br/>
-      <button id="s6">Age: 65-75</button><br/>
-      <button id="s7">Age: 75-85</button><br/>
       <button id="s8">Age: 85+</button><br/>
+      <button id="s7">Age: 75-85</button><br/>
+      <button id="s6">Age: 65-75</button><br/>
+      <button id="s5">Age: 50-65</button><br/>
+      <button id="s4">Age: 40-50</button><br/>
+      <button id="s3">Age: 30-40</button><br/>
+      <button id="s2">Age: 18-30</button><br/>
+      <button id="s1">Age: 0-18</button><br/>
     </div>
     <div id="intro">
         <div class="screen"></div>
@@ -403,7 +408,7 @@
                 <li>All data is gathered from public sources.  The notebook where the probabilities were derived,
                     and links to those sources is <a href="covid_death_rate.ipynb">here</a>.</li>
                 <li>Any errors or misrepresentations on this page are my own unintentional mistakes.</li>
-                <li>The grid for 0-18 year olds is extremely large because of the small probabilities involved, so it
+                <li>The grid for 0-18 year olds is extremely dense because of the small probabilities involved, so it
                     doesn't look great and I suggest starting with something else.  If you look hard, though, you
                     will see one very small dark red dot, and a scattering of orange dots.</li>
             </ul>
